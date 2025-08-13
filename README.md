@@ -9,8 +9,11 @@
 [![macOS](https://img.shields.io/badge/platform-macOS-blue.svg)](https://github.com/harryboda/x-google-drive-downloader)
 [![Release](https://img.shields.io/github/v/release/harryboda/x-google-drive-downloader)](https://github.com/harryboda/x-google-drive-downloader/releases)
 [![License](https://img.shields.io/github/license/harryboda/x-google-drive-downloader)](LICENSE)
+[![AI Developed](https://img.shields.io/badge/🤖_Developed_by-Claude_Code-7C3AED)](https://claude.ai/code)
 
-[📥 下载 DMG](https://github.com/harryboda/x-google-drive-downloader/releases/latest) | [🐛 报告问题](https://github.com/harryboda/x-google-drive-downloader/issues) | [📖 使用指南](#使用方法)
+🤖 **此项目完全由 [Claude Code](https://claude.ai/code) 开发，无人工干预** - 展示AI在现代软件开发中的能力
+
+[📥 下载 DMG](https://github.com/harryboda/x-google-drive-downloader/releases/latest) | [🐛 报告问题](https://github.com/harryboda/x-google-drive-downloader/issues) | [📖 使用指南](#使用方法) | [🤖 AI开发声明](AI_DEVELOPMENT.md)
 
 </div>
 
