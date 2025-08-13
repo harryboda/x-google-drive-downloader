@@ -28,7 +28,22 @@
 
 ## 🖼️ 截图
 
-*即将添加应用截图*
+### 主界面
+![主界面截图](screenshots/01_main_interface.png)
+
+*现代化macOS原生设计，简洁直观的用户界面*
+
+### 核心功能
+![功能展示](screenshots/02_features.png)
+
+*六大核心特性，完全由AI设计和开发*
+
+### 应用图标
+<div align="center">
+<img src="screenshots/03_app_icon.png" width="128" height="128" alt="应用图标">
+</div>
+
+*专业设计的蓝色云下载图标，适配macOS所有尺寸*
 
 ## 📦 安装
 
@@ -84,6 +99,15 @@ open build/macos/Build/Products/Release/
 - **存储**: 根据下载内容确定可用空间
 
 ## 🔧 开发
+
+### 🤖 Claude Code开发资源
+
+本项目提供完整的AI开发资源，让你也能体验纯AI开发：
+
+- **[本地开发指南](claude_development/LOCAL_DEVELOPMENT_GUIDE.md)** - 使用Claude Code在本地复现开发过程
+- **[开发时间线](claude_development/DEVELOPMENT_TIMELINE.md)** - 完整的AI开发过程记录  
+- **[技术决策记录](claude_development/TECHNICAL_DECISIONS.md)** - AI架构决策的思考过程
+- **[项目配置文件](CLAUDE.md)** - Claude Code项目配置和开发指令
 
 ### 技术栈
 
@@ -161,7 +185,7 @@ flutter test
 遇到问题？请通过以下方式反馈：
 
 - [GitHub Issues](https://github.com/harryboda/x-google-drive-downloader/issues)
-- 邮件: your-email@domain.com
+- 邮件: harryboda@gmail.com
 
 提交问题时请包含：
 - 操作系统版本
