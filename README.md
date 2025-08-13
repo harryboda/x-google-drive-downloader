@@ -29,21 +29,21 @@
 ## 🖼️ 截图
 
 ### 主界面
-![主界面截图](screenshots/01_main_interface.png)
+![主界面截图](screenshots/01_main_interface_fixed.png)
 
-*现代化macOS原生设计，简洁直观的用户界面*
+*真实macOS原生界面，完美支持中文显示，专业图标集成*
 
 ### 核心功能
-![功能展示](screenshots/02_features.png)
+![功能展示](screenshots/02_features_fixed.png)
 
-*六大核心特性，完全由AI设计和开发*
+*六大核心特性展示，清晰的功能说明和现代化卡片布局*
 
 ### 应用图标
 <div align="center">
-<img src="screenshots/03_app_icon.png" width="128" height="128" alt="应用图标">
+<img src="screenshots/03_app_icon_professional.png" width="128" height="128" alt="专业应用图标">
 </div>
 
-*专业设计的蓝色云下载图标，适配macOS所有尺寸*
+*符合Apple Human Interface Guidelines的专业级图标设计*
 
 ## 📦 安装
 
