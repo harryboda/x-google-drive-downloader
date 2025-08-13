@@ -1,0 +1,75 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圆角矩形 -->
+  <rect width="1024" height="1024" rx="180" fill="url(#backgroundGradient)"/>
+  
+  <!-- 渐变定义 -->
+  <defs>
+    <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FAFAFA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F2F2F7;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cloudGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4285F4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0066CC;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0066CC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#34C759;stop-opacity:1" />
+    </linearGradient>
+    <filter id="cloudShadow">
+      <feDropShadow dx="0" dy="8" stdDeviation="20" flood-color="#0066CC" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  
+  <!-- 云朵主体 -->
+  <path d="M 200 400 
+           C 200 320, 260 260, 340 260
+           C 380 230, 430 230, 470 260
+           C 550 250, 620 300, 650 370
+           C 720 380, 780 430, 780 490
+           C 780 550, 720 600, 650 600
+           L 280 600
+           C 210 600, 160 550, 160 480
+           C 160 430, 200 400, 200 400 Z" 
+        fill="url(#cloudGradient)" 
+        filter="url(#cloudShadow)"/>
+  
+  <!-- X 标识 (现代化字体) -->
+  <g transform="translate(680, 300)">
+    <circle r="50" fill="rgba(255,255,255,0.9)" opacity="0.8"/>
+    <text x="0" y="0" 
+          font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif" 
+          font-size="60" 
+          font-weight="700" 
+          fill="#0066CC" 
+          text-anchor="middle" 
+          dominant-baseline="central">X</text>
+  </g>
+  
+  <!-- 下载箭头 -->
+  <g transform="translate(470, 650)">
+    <!-- 箭头杆 -->
+    <rect x="-20" y="0" width="40" height="120" rx="20" fill="url(#arrowGradient)"/>
+    
+    <!-- 箭头头部 -->
+    <path d="M -50 100 L 0 150 L 50 100" 
+          fill="url(#arrowGradient)" 
+          stroke="none"/>
+    
+    <!-- 动感光效 -->
+    <ellipse cx="0" cy="60" rx="30" ry="15" fill="rgba(255,255,255,0.4)" opacity="0.6"/>
+  </g>
+  
+  <!-- 完成指示点 (3个小点表示文件) -->
+  <g transform="translate(470, 820)">
+    <circle cx="-30" cy="0" r="12" fill="#34C759" opacity="0.8"/>
+    <circle cx="0" cy="0" r="12" fill="#34C759"/>
+    <circle cx="30" cy="0" r="12" fill="#34C759" opacity="0.8"/>
+    
+    <!-- 小光效 -->
+    <circle cx="0" cy="-3" r="6" fill="rgba(255,255,255,0.6)"/>
+  </g>
+  
+  <!-- 整体光效 -->
+  <ellipse cx="470" cy="450" rx="250" ry="100" fill="rgba(255,255,255,0.1)" opacity="0.4"/>
+</svg>
