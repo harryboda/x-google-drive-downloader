@@ -4,8 +4,7 @@ import 'services/download_service.dart';
 import 'services/clipboard_service.dart';
 import 'services/auth/auth_service.dart';
 import 'ui/theme/app_theme.dart';
-import 'ui/pages/auth_page.dart';
-import 'ui/pages/download_page.dart';
+import 'ui/pages/app_startup_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,15 +31,11 @@ class MyApp extends StatelessWidget {
         
         ChangeNotifierProvider(create: (context) => ClipboardService()),
       ],
-      child: Consumer<AuthService>(
-        builder: (context, authService, child) {
-          return MaterialApp(
-            title: 'Google Drive Downloader',
-            theme: AppTheme.lightTheme,
-            home: authService.isAuthenticated ? const DownloadPage() : const AuthPage(),
-            debugShowCheckedModeBanner: false,
-          );
-        },
+      child: MaterialApp(
+        title: 'X Google Drive Downloader',
+        theme: AppTheme.lightTheme,
+        home: const AppStartupPage(), // 使用新的启动页面，包含OAuth检测逻辑
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

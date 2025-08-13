@@ -1,82 +1,61 @@
-/// 应用配置文件 v2.0
+import '../services/auth/oauth_config_manager.dart';
+
+/// 应用配置文件 v3.0 - 智能OAuth配置管理
 class AppConfig {
-  // Google OAuth 2.0 配置 - 支持内置默认值和用户自定义
+  // 缓存的OAuth凭据
+  static OAuthCredentials? _cachedCredentials;
   
-  // 内置的默认OAuth配置 (开发者提供)
-  static const String _defaultClientId = 'YOUR_GOOGLE_CLIENT_ID';
-  static const String _defaultClientSecret = 'YOUR_GOOGLE_CLIENT_SECRET';
-  
-  // 用户自定义配置 (高级用户可以设置)
-  static String? _customClientId;
-  static String? _customClientSecret;
-  
-  /// 获取客户端ID (优先级: 环境变量 > 用户自定义 > 内置默认)
-  static String get clientId {
-    // 1. 优先使用环境变量 (保持向后兼容)
-    const clientIdFromEnv = String.fromEnvironment('GOOGLE_CLIENT_ID');
-    if (clientIdFromEnv.isNotEmpty) {
-      return clientIdFromEnv;
-    }
-    
-    // 2. 使用用户自定义配置
-    if (_customClientId != null && _customClientId!.isNotEmpty) {
-      return _customClientId!;
-    }
-    
-    // 3. 使用内置默认配置
-    return _defaultClientId;
+  /// 获取客户端ID
+  static Future<String> getClientId() async {
+    final credentials = await _getCredentials();
+    return credentials?.clientId ?? '';
   }
   
-  /// 获取客户端密钥 (优先级: 环境变量 > 用户自定义 > 内置默认)
-  static String get clientSecret {
-    // 1. 优先使用环境变量 (保持向后兼容)
-    const clientSecretFromEnv = String.fromEnvironment('GOOGLE_CLIENT_SECRET');
-    if (clientSecretFromEnv.isNotEmpty) {
-      return clientSecretFromEnv;
-    }
-    
-    // 2. 使用用户自定义配置
-    if (_customClientSecret != null && _customClientSecret!.isNotEmpty) {
-      return _customClientSecret!;
-    }
-    
-    // 3. 使用内置默认配置
-    return _defaultClientSecret;
+  /// 获取客户端密钥
+  static Future<String> getClientSecret() async {
+    final credentials = await _getCredentials();
+    return credentials?.clientSecret ?? '';
   }
   
-  /// 设置用户自定义OAuth配置
-  static void setCustomOAuth({
-    required String clientId,
-    required String clientSecret,
-  }) {
-    _customClientId = clientId.trim();
-    _customClientSecret = clientSecret.trim();
+  /// 获取当前有效的OAuth凭据
+  static Future<OAuthCredentials?> _getCredentials() async {
+    if (_cachedCredentials != null) {
+      return _cachedCredentials;
+    }
+    
+    _cachedCredentials = await OAuthConfigManager.getCurrentCredentials();
+    return _cachedCredentials;
   }
   
-  /// 清除用户自定义配置，恢复默认值
-  static void resetToDefault() {
-    _customClientId = null;
-    _customClientSecret = null;
+  /// 清除凭据缓存（当配置更改时调用）
+  static void clearCredentialsCache() {
+    _cachedCredentials = null;
+  }
+  
+  /// 检查OAuth配置是否可用
+  static Future<bool> hasValidOAuthConfig() async {
+    final credentials = await _getCredentials();
+    return credentials != null && 
+           credentials.clientId.isNotEmpty && 
+           credentials.clientSecret.isNotEmpty;
   }
   
   /// 获取当前配置来源信息
-  static String get configSource {
-    const envClientId = String.fromEnvironment('GOOGLE_CLIENT_ID');
-    if (envClientId.isNotEmpty) {
-      return '环境变量';
-    }
-    
-    if (_customClientId != null) {
-      return '用户自定义';
-    }
-    
-    return '内置默认';
+  static Future<String> getConfigSource() async {
+    final credentials = await _getCredentials();
+    return credentials?.source ?? '未配置';
   }
   
-  /// 检查是否使用默认配置
-  static bool get isUsingDefault {
-    const envClientId = String.fromEnvironment('GOOGLE_CLIENT_ID');
-    return envClientId.isEmpty && _customClientId == null;
+  /// 同步版本的clientId (向后兼容)
+  static String get clientId {
+    // 这个方法保持同步以向后兼容，但建议使用异步版本
+    return _cachedCredentials?.clientId ?? '';
+  }
+  
+  /// 同步版本的clientSecret (向后兼容)  
+  static String get clientSecret {
+    // 这个方法保持同步以向后兼容，但建议使用异步版本
+    return _cachedCredentials?.clientSecret ?? '';
   }
   
   // 重定向URI (桌面应用标准配置)
