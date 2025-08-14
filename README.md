@@ -7,7 +7,7 @@
 **快速、安全地批量下载 Google Drive 文件夹**
 
 [![macOS](https://img.shields.io/badge/platform-macOS-blue.svg)](https://github.com/harryboda/x-google-drive-downloader)
-[![Release](https://img.shields.io/badge/release-v2.1.0-green.svg)](https://github.com/harryboda/x-google-drive-downloader/releases/latest)
+[![Release](https://img.shields.io/badge/release-v2.1.1-green.svg)](https://github.com/harryboda/x-google-drive-downloader/releases/latest)
 [![License](https://img.shields.io/github/license/harryboda/x-google-drive-downloader)](LICENSE)
 [![AI Developed](https://img.shields.io/badge/🤖_Developed_by-Claude_Code-7C3AED)](https://claude.ai/code)
 
@@ -17,15 +17,15 @@
 
 </div>
 
-## 🆕 v2.1.0 更新 (必要更新)
+## 🆕 v2.1.1 更新 (视觉升级)
 
-⚠️ **重要**: v2.0.0存在认证问题，请立即更新到v2.1.0
+🎨 **全新专业图标设计！** - 现在拥有符合Apple设计规范的精美图标
 
-### 修复的关键问题
-- ✅ 修复OAuth令牌获取卡顿问题
-- ✅ 修复认证后黑屏导航问题
-- ✅ 优化应用启动流程
-- ✅ 解决编译错误
+### 视觉升级亮点
+- ✨ **专业级图标**: Google Drive风格的现代化设计
+- 🎯 **完美适配**: 支持16px到1024px所有macOS所需尺寸
+- 🏷️ **品牌识别**: 清晰的X字母标识和下载功能指示
+- 🌈 **色彩丰富**: Google经典蓝、绿、黄配色方案
 
 ## ✨ 特性
 
@@ -59,7 +59,7 @@
 
 ### 方法1：下载DMG（推荐）
 
-1. 从 [Releases](https://github.com/harryboda/x-google-drive-downloader/releases/latest) 页面下载最新的 `XGoogleDriveDownloader-v2.1.0.dmg`
+1. 从 [Releases](https://github.com/harryboda/x-google-drive-downloader/releases/latest) 页面下载最新的 `XGoogleDriveDownloader-v2.1.1.dmg`
 2. 双击打开DMG文件
 3. 将应用拖拽到 `Applications` 文件夹
 4. 首次启动时，右键点击选择"打开"以允许运行
