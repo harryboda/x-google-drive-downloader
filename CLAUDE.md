@@ -208,8 +208,23 @@ flutter build macos --release
 
 5. **构建发布版本**:
    ```bash
-   ./build_app.sh
+   # 开发模式运行
+   flutter run -d macos --debug
+   
+   # 发布版本构建
+   flutter build macos --release
+   
+   # 创建DMG安装包
    ./create_dmg.sh
+   
+   # GitHub发布管理
+   ./publish_to_github.sh                              # 发布新版本
+   ./scripts/github_release_manager.sh list           # 列出所有releases  
+   ./scripts/github_release_manager.sh delete_tag v2.0.0  # 删除指定版本
+   
+   # 代码质量检查
+   flutter analyze
+   flutter test
    ```
 
 ### Contributing Guidelines

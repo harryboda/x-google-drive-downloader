@@ -16,7 +16,11 @@ echo "=" * 60
 # 检查必需的工具和文件
 echo "🔍 检查发布环境..."
 
-# 检查GitHub CLI
+# 注意: 本脚本使用GitHub API而非gh CLI命令
+# 因为gh CLI在某些操作（如删除release）上有限制
+# 如需管理release，请使用: ./scripts/github_release_manager.sh
+
+# 检查GitHub CLI (仅用于认证)
 if ! command -v gh &> /dev/null; then
     echo "❌ GitHub CLI 未安装"
     echo "请运行: brew install gh"
