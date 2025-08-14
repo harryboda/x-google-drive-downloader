@@ -6,9 +6,9 @@
 set -e  # 遇到错误立即退出
 
 APP_NAME="X Google Drive Downloader"
-VERSION="2.0.0"
+VERSION="2.1.0"
 REPO_NAME="x-google-drive-downloader"
-DMG_FILE="XGoogleDriveDownloader-v2.0.0.dmg"
+DMG_FILE="XGoogleDriveDownloader-v2.1.0.dmg"
 
 echo "🚀 开始发布 ${APP_NAME} 到 GitHub"
 echo "=" * 60
@@ -102,29 +102,24 @@ git add .
 if git diff --staged --quiet; then
     echo "⚠️ 没有新的更改需要提交"
 else
-    git commit -m "🎉 Initial release - X Google Drive Downloader v2.0.0
+    git commit -m "🔧 v2.1.0 - OAuth认证修复版
 
-✨ Features:
-- Zero-configuration Google Drive folder downloading
-- Built-in OAuth credentials for instant use
-- Persistent authentication (login once, use forever)
-- Modern macOS native UI design
-- Smart clipboard link detection
-- Multi-level secure storage strategy
-- Professional custom app icon
-- Direct DMG distribution
+✨ 修复的关键问题:
+- 修复OAuth令牌获取卡顿问题（Dio拦截器递归死锁）
+- 修复认证后导航黑屏问题
+- 优化应用启动状态检测
+- 修复编译错误和枚举定义问题
 
-🔧 Technical:
-- Flutter 3.8.1+ Desktop application
-- Type-safe JSON serialization
-- OAuth 2.0 + Google Drive API
-- macOS 10.14+ support
-- Universal Binary (Intel + Apple Silicon)
+🚀 改进内容:
+- 完全修复OAuth 2.0认证流程
+- 消除黑屏和卡顿问题
+- 增强调试日志和错误提示
+- 优化代码架构和质量
 
 📦 Distribution:
 - 24MB standalone DMG installer
-- No environment variables required
-- Drag-and-drop installation"
+- 零配置，开箱即用
+- 稳定可靠的认证系统"
 
     echo "✅ 代码提交完成"
 fi
@@ -140,22 +135,27 @@ echo "🎉 6. 创建GitHub Release..."
 
 # 创建Release描述
 cat > release-notes.md << EOF
-# X Google Drive Downloader v2.0.0
+# X Google Drive Downloader v2.1.0
 
-🎉 **首个开源发布版本！**
+🔧 **OAuth认证修复版！**
 
 ## 📥 下载
 
-**推荐下载**: [XGoogleDriveDownloader-v2.0.0.dmg](https://github.com/$GITHUB_USER/$REPO_NAME/releases/download/v2.0.0/XGoogleDriveDownloader-v2.0.0.dmg) (24MB)
+**推荐下载**: [XGoogleDriveDownloader-v2.1.0.dmg](https://github.com/$GITHUB_USER/$REPO_NAME/releases/download/v2.1.0/XGoogleDriveDownloader-v2.1.0.dmg) (24MB)
 
-## ✨ 新特性
+## 🔧 修复的关键问题
 
-🚀 **零配置体验** - 内置OAuth认证，下载即用，无需任何设置  
-🎨 **专业界面** - 全新设计的macOS原生界面和自定义图标  
-💾 **智能下载** - 默认保存到~/Downloads，保持完整文件夹结构  
-🔐 **持久认证** - 一次Google登录，长期免密使用  
-⚡ **剪贴板监听** - 复制Google Drive链接自动提示下载  
-🛡️ **安全存储** - 多级加密保护认证信息  
+✅ **OAuth令牌获取卡顿** - 解决了获取令牌后一直转圈的问题  
+✅ **认证后黑屏问题** - 修复认证成功后不进入主界面的bug  
+✅ **应用启动检测** - 优化OAuth配置和认证状态检测  
+✅ **编译错误修复** - 解决枚举定义和类型错误  
+
+## ✨ 技术改进
+
+🚀 **Dio拦截器优化** - 排除OAuth请求避免递归死锁  
+🎯 **导航逻辑完善** - 认证成功后自动进入主界面  
+💡 **调试日志增强** - 更详细的错误信息和状态追踪  
+🔐 **四层级OAuth系统** - 智能配置管理和自动检测  
 
 ## 🛠️ 系统要求
 
