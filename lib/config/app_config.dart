@@ -69,7 +69,7 @@ class AppConfig {
   
   // 应用信息
   static const String appName = 'X Google Drive Downloader';
-  static const String appVersion = '2.0.0';
+  static const String appVersion = '2.1.1';
   static const String appDescription = '快速、安全地下载 Google Drive 文件夹';
   
   // 开发者设置指南

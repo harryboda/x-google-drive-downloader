@@ -6,7 +6,7 @@
 set -e  # 遇到错误立即退出
 
 APP_NAME="X Google Drive Downloader"
-APP_VERSION="2.0.0"
+APP_VERSION="2.1.1"
 DMG_NAME="XGoogleDriveDownloader-v${APP_VERSION}"
 BUILD_DIR="build/macos/Build/Products/Release"
 TEMP_DMG_DIR="/tmp/${DMG_NAME}"

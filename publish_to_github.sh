@@ -6,9 +6,9 @@
 set -e  # 遇到错误立即退出
 
 APP_NAME="X Google Drive Downloader"
-VERSION="2.1.0"
+VERSION="2.1.1"
 REPO_NAME="x-google-drive-downloader"
-DMG_FILE="XGoogleDriveDownloader-v2.1.0.dmg"
+DMG_FILE="XGoogleDriveDownloader-v2.1.1.dmg"
 
 echo "🚀 开始发布 ${APP_NAME} 到 GitHub"
 echo "=" * 60
