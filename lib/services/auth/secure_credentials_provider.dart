@@ -17,13 +17,26 @@ class SecureCredentialsProvider {
   
   /// 获取安全的内置凭据
   /// 
-  /// 在开源版本中返回null
+  /// 在开源版本中返回null（除非设置了调试凭据）
   /// 在分发版本中会包含加密的默认凭据
   static Future<Map<String, String>?> getBuiltInCredentials() async {
-    // 在开源版本中，返回null以确保安全
+    // 调试模式下检查是否有测试凭据
     if (kDebugMode) {
+      // 优先使用环境变量（开发时设置）
+      const testClientId = String.fromEnvironment('TEST_GOOGLE_CLIENT_ID');
+      const testClientSecret = String.fromEnvironment('TEST_GOOGLE_CLIENT_SECRET');
+      
+      if (testClientId.isNotEmpty && testClientSecret.isNotEmpty) {
+        debugPrint('🔧 使用测试环境OAuth凭据');
+        return {
+          'client_id': testClientId,
+          'client_secret': testClientSecret,
+        };
+      }
+      
       debugPrint('🔒 开源版本：需要用户配置OAuth凭据');
       debugPrint('💡 提示：分发版本将包含内置的安全凭据');
+      debugPrint('🛠️ 调试提示：可以设置环境变量 TEST_GOOGLE_CLIENT_ID 和 TEST_GOOGLE_CLIENT_SECRET');
       return null;
     }
     

@@ -44,9 +44,21 @@ class AuthService extends ChangeNotifier {
       // 触发AppConfig的异步初始化，设置缓存
       await AppConfig.getClientId();
       await _loadSavedAuth();
+      
+      // 检查配置有效性：如果有认证信息但Client ID为空，清除认证信息
+      if (_tokens != null && clientId.isEmpty) {
+        debugPrint('⚠️ 检测到认证信息但OAuth配置无效，清除存储的认证信息');
+        await signOut();
+      }
     } catch (e) {
       debugPrint('初始化AppConfig失败: $e');
       await _loadSavedAuth();
+      
+      // 同样检查配置有效性
+      if (_tokens != null && clientId.isEmpty) {
+        debugPrint('⚠️ 检测到认证信息但OAuth配置无效，清除存储的认证信息');
+        await signOut();
+      }
     }
   }
 
