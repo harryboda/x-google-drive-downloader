@@ -5,6 +5,14 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'secure_credentials_provider.dart';
 
+// 配置选择类型
+enum ConfigChoice {
+  notSelected,     // 未选择
+  useBuiltIn,      // 使用内置凭据
+  useCustom,       // 使用自定义凭据
+  guided          // 需要引导设置
+}
+
 /// OAuth配置管理器
 /// 实现四层级的OAuth解决方案：
 /// 1. 用户自定义配置（最高优先级）
@@ -16,18 +24,10 @@ class OAuthConfigManager {
   static const String _firstRunKey = 'first_run_completed';
   static const String _configChoiceKey = 'oauth_config_choice';
   
-  // 配置选择类型
-  enum ConfigChoice {
-    notSelected,     // 未选择
-    useBuiltIn,      // 使用内置凭据
-    useCustom,       // 使用自定义凭据
-    guided          // 需要引导设置
-  }
-  
   /// 检查OAuth配置状态
   static Future<OAuthConfigStatus> checkConfigStatus() async {
     final prefs = await SharedPreferences.getInstance();
-    final isFirstRun = !prefs.getBool(_firstRunKey, false);
+    final isFirstRun = !(prefs.getBool(_firstRunKey) ?? false);
     
     if (isFirstRun) {
       return OAuthConfigStatus.firstRun;

@@ -5,6 +5,7 @@ import '../../services/auth/auth_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/animated_button.dart';
+import 'download_page.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -101,8 +102,16 @@ class _AuthPageState extends State<AuthPage> {
         '3. 网络连接问题\n\n'
         '请检查控制台日志获取详细错误信息'
       );
+    } else {
+      // 认证成功，导航到主页面
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const DownloadPage(),
+          ),
+        );
+      }
     }
-    // 成功的话，AuthService会通知UI更新，主app会自动导航到主页面
   }
 
   void _showErrorDialog(String message) {

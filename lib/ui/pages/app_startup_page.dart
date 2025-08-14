@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import '../../services/auth/oauth_config_manager.dart';
+import '../../services/auth/auth_service.dart';
+import '../../config/app_config.dart';
 import 'oauth_setup_page.dart';
 import 'auth_page.dart';
+import 'download_page.dart';
 
 /// 应用启动页面
 /// 检测OAuth配置状态并引导用户到正确的页面
@@ -44,7 +49,7 @@ class _AppStartupPageState extends State<AppStartupPage> {
           
         case OAuthConfigStatus.builtInReady:
         case OAuthConfigStatus.customReady:
-          _navigateToAuthPage();
+          await _checkAuthenticationStatus();
           break;
       }
     } catch (e) {
@@ -60,18 +65,60 @@ class _AppStartupPageState extends State<AppStartupPage> {
     }
   }
 
-  void _navigateToOAuthSetup({required bool isFirstRun}) {
-    Navigator.of(context).pushReplacement(
+  void _navigateToOAuthSetup({required bool isFirstRun}) async {
+    final result = await Navigator.of(context).push<bool>(
       MaterialPageRoute(
         builder: (context) => OAuthSetupPage(isFirstRun: isFirstRun),
       ),
     );
+    
+    // 如果配置成功，清除AppConfig缓存并重新检查认证状态
+    if (result == true && mounted) {
+      try {
+        AppConfig.clearCredentialsCache(); // 清除缓存以重新加载配置
+        await _checkAuthenticationStatus();
+      } catch (e) {
+        debugPrint('重新检查认证状态失败: $e');
+        await _checkAuthenticationStatus();
+      }
+    }
+  }
+
+  /// 检查认证状态并导航到正确页面
+  Future<void> _checkAuthenticationStatus() async {
+    try {
+      setState(() {
+        _statusMessage = '检查认证状态...';
+      });
+      
+      final authService = Provider.of<AuthService>(context, listen: false);
+      
+      // 等待AuthService完成初始化
+      await Future.delayed(const Duration(milliseconds: 500));
+      
+      if (authService.isAuthenticated) {
+        _navigateToMainPage();
+      } else {
+        _navigateToAuthPage();
+      }
+    } catch (e) {
+      debugPrint('检查认证状态失败: $e');
+      _navigateToAuthPage();
+    }
   }
 
   void _navigateToAuthPage() {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => const AuthPage(),
+      ),
+    );
+  }
+  
+  void _navigateToMainPage() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => const DownloadPage(),
       ),
     );
   }

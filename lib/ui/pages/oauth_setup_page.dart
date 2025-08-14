@@ -785,7 +785,7 @@ class _OAuthSetupPageState extends State<OAuthSetupPage> with TickerProviderStat
     setState(() => _isLoading = true);
     
     try {
-      await OAuthConfigManager.saveConfigChoice(OAuthConfigManager.ConfigChoice.useBuiltIn);
+      await OAuthConfigManager.saveConfigChoice(ConfigChoice.useBuiltIn);
       if (mounted) {
         Navigator.of(context).pop(true); // 返回成功
       }
@@ -808,7 +808,7 @@ class _OAuthSetupPageState extends State<OAuthSetupPage> with TickerProviderStat
       );
       
       if (success) {
-        await OAuthConfigManager.saveConfigChoice(OAuthConfigManager.ConfigChoice.useCustom);
+        await OAuthConfigManager.saveConfigChoice(ConfigChoice.useCustom);
         if (mounted) {
           Navigator.of(context).pop(true); // 返回成功
         }

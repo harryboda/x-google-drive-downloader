@@ -48,13 +48,11 @@ class AppConfig {
   
   /// 同步版本的clientId (向后兼容)
   static String get clientId {
-    // 这个方法保持同步以向后兼容，但建议使用异步版本
     return _cachedCredentials?.clientId ?? '';
   }
   
   /// 同步版本的clientSecret (向后兼容)  
   static String get clientSecret {
-    // 这个方法保持同步以向后兼容，但建议使用异步版本
     return _cachedCredentials?.clientSecret ?? '';
   }
   

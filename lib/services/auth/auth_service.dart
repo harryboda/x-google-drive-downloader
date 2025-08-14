@@ -35,7 +35,19 @@ class AuthService extends ChangeNotifier {
 
   AuthService() {
     _initializeDio();
-    _loadSavedAuth();
+    _initializeAppConfig();
+  }
+  
+  /// 初始化AppConfig缓存
+  Future<void> _initializeAppConfig() async {
+    try {
+      // 触发AppConfig的异步初始化，设置缓存
+      await AppConfig.getClientId();
+      await _loadSavedAuth();
+    } catch (e) {
+      debugPrint('初始化AppConfig失败: $e');
+      await _loadSavedAuth();
+    }
   }
 
   void _initializeDio() {
@@ -45,10 +57,15 @@ class AuthService extends ChangeNotifier {
     // 添加请求拦截器自动添加Authorization header
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
-        if (_tokens != null && !_tokens!.isExpired) {
+        // 排除OAuth相关的请求，避免递归和错误的Authorization header
+        final isOAuthRequest = options.path.contains('oauth2.googleapis.com') || 
+                               options.path.contains(tokenEndpoint) ||
+                               options.path.contains(authorizationEndpoint);
+        
+        if (!isOAuthRequest && _tokens != null && !_tokens!.isExpired) {
           options.headers['Authorization'] = _tokens!.authorizationHeader;
-        } else if (_tokens != null && _tokens!.isExpiringSoon) {
-          // 自动刷新token
+        } else if (!isOAuthRequest && _tokens != null && _tokens!.isExpiringSoon) {
+          // 只对非OAuth请求进行token刷新
           await _refreshTokenIfNeeded();
           if (_tokens != null) {
             options.headers['Authorization'] = _tokens!.authorizationHeader;
@@ -119,6 +136,15 @@ class AuthService extends ChangeNotifier {
 
   /// 生成授权URL
   String generateAuthUrl() {
+    debugPrint('🚀 生成OAuth认证URL...');
+    debugPrint('🔑 Client ID: ${clientId.isNotEmpty ? "${clientId.substring(0, 20)}..." : "空"}');
+    debugPrint('🔗 重定向URI: $redirectUri');
+    
+    if (clientId.isEmpty) {
+      debugPrint('❌ Client ID为空，无法生成认证URL');
+      return '';
+    }
+    
     final params = {
       'client_id': clientId,
       'redirect_uri': redirectUri,
@@ -133,6 +159,7 @@ class AuthService extends ChangeNotifier {
       queryParameters: params,
     );
 
+    debugPrint('✅ 认证URL生成成功: ${uri.toString().substring(0, 100)}...');
     return uri.toString();
   }
 
@@ -141,6 +168,18 @@ class AuthService extends ChangeNotifier {
     _setLoading(true);
 
     try {
+      debugPrint('🔄 开始交换授权码获取令牌...');
+      debugPrint('📝 授权码: ${authorizationCode.substring(0, 10)}...');
+      debugPrint('🔑 Client ID: ${clientId.isNotEmpty ? "${clientId.substring(0, 20)}..." : "空"}');
+      debugPrint('🔐 Client Secret: ${clientSecret.isNotEmpty ? "已设置" : "未设置"}');
+      debugPrint('🔗 重定向URI: $redirectUri');
+      
+      if (clientId.isEmpty || clientSecret.isEmpty) {
+        debugPrint('❌ OAuth配置不完整！');
+        return false;
+      }
+      
+      debugPrint('🌐 发送令牌请求到: $tokenEndpoint');
       final response = await _dio.post(
         tokenEndpoint,
         data: {
@@ -155,7 +194,10 @@ class AuthService extends ChangeNotifier {
         ),
       );
 
+      debugPrint('✅ 令牌请求成功！HTTP状态: ${response.statusCode}');
       final tokenData = response.data;
+      debugPrint('📦 收到令牌数据: ${tokenData.keys.join(", ")}');
+      
       _tokens = AuthTokens(
         accessToken: tokenData['access_token'],
         refreshToken: tokenData['refresh_token'],
@@ -165,10 +207,14 @@ class AuthService extends ChangeNotifier {
         scope: tokenData['scope'] ?? scope,
       );
 
+      debugPrint('👤 开始获取用户信息...');
       // 获取用户信息
       await _fetchUserInfo();
+      
+      debugPrint('💾 开始保存认证信息...');
       await _saveAuth();
 
+      debugPrint('🎉 认证流程完成！');
       notifyListeners();
       return true;
     } catch (e) {
@@ -202,10 +248,12 @@ class AuthService extends ChangeNotifier {
   /// 获取用户信息
   Future<void> _fetchUserInfo() async {
     try {
+      debugPrint('🌐 获取用户信息从: $userInfoEndpoint');
       final response = await _dio.get(userInfoEndpoint);
       _userInfo = UserInfo.fromJson(response.data);
+      debugPrint('✅ 用户信息获取成功: ${_userInfo!.name}');
     } catch (e) {
-      debugPrint('Failed to fetch user info: $e');
+      debugPrint('❌ 获取用户信息失败: $e');
     }
   }
 
